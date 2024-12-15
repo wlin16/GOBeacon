@@ -1,0 +1,89 @@
+general:
+  seed: 2023
+  gpu_id: 0
+  usage: train # train, infer, feat_extract
+  save_path_log: ./result/logging.log
+  save_path_predictions: ./result/${dataset.load_data.benchmark}/All_predictions_results.csv
+  save_figure: ./result/${dataset.load_data.benchmark}/figure/${model.model_choice}_${dataset.load_data.sub_ontology}_${general.save_num}_threshold.png
+  save_num: 0
+  save_name: null
+
+model:
+  batch_size: 128 # batch_size for model training
+  num_features: 1024
+  hidden: 256
+  loss_fn: ssl
+  weights: null
+  alpha: null
+  weight_decay: 0
+  grad_accum_steps: 1 # 1: no grad_accum_steps; >1: steps for gradient accumulation
+  optimizer: adamw
+  model_choice: mlp # mlp or graph
+  train_type: sequence # sequence, structure or graph
+  num_layers: 2
+  num_heads: 8
+  lr: 1e-4
+  dropout: 0.4
+  lrs: null # null, reduce, cosine, steplr
+  early_stop: 25
+  n_epochs: 2000
+  model_save_path: ./result/${dataset.load_data.benchmark}/model
+  model_save_filename: ${dataset.load_data.sub_ontology}_sequence.ckpt
+  debug: true
+
+dataset:
+  feat_extract:
+    benchmark: CAFA3 # CAFA3 or PDBch
+    ds_path: data
+    centre_node_csv: train_df.pkl
+    # centre_node_csv: test_df.pkl
+    ppi_path: data/string_training_crawl
+    top: 100 # most neighbors to pick out
+    lmdb_path: data/${dataset.load_data.benchmark}/lmdb/cafa3_single_ProstT5
+    extract_type: sequence # sequence or structure or graph
+
+  load_data:
+    sub_ontology: BP
+    benchmark: CAFA3 # CAFA3 or PDBch
+    ds_path: data
+    train_centre_node_csv: train_df.pkl
+    train_sub_list: train_key_list.txt
+    valid_sub_list: valid_key_list.txt
+    test_centre_node_csv: test_df.pkl
+    target_centre_node_csv: test_df.pkl
+    lmdb_path: data/${dataset.load_data.benchmark}/lmdb/cafa3_single_ProstT5
+    bottom_label_file: bottom_label.pkl
+    go_obo: data/go.obo
+    prot_relation_file:
+      BP: bp_prot_relations.pkl
+      MF: mf_prot_relations.pkl
+      CC: cc_prot_relations.pkl
+    batch_size: ${model.batch_size}
+    BP_len: 3992
+    CC_len: 551
+    MF_len: 677
+
+predict:
+  save_name: null
+  model_ckpt: result/${dataset.load_data.benchmark}/${dataset.load_data.sub_ontology}_sequence.ckpt
+  ensemble_dir: null
+
+wandb:
+  project: CAFA3_${dataset.load_data.sub_ontology}
+  run_id: null
+  run_name: ${model.model_choice}_${general.save_num}
+
+
+defaults:
+  - _self_
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+
+hydra:
+  run:
+    dir: "."
+  output_subdir: null
+  job_logging:
+    root:
+      handlers: null
+      disabled: true
