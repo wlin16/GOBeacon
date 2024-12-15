@@ -184,9 +184,11 @@ wandb/
 .DS_Store
 **/cluster_run_result/
 
+*.ipynb
 *.o*
 *.log
 *.pt
 *.ckpt
 *.png
 ._predictions.txt
+
