@@ -71,5 +71,4 @@ class NT_Xent(nn.Module):
         labels = torch.zeros(N).to(positive_samples.device).long()
         logits = torch.cat((positive_samples, negative_samples), dim=1)
         loss = self.criterion(logits, labels)
-        #loss /= N
         return loss

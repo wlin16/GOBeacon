@@ -196,18 +196,18 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Process STRING database interactions for datasets.")
     parser.add_argument('-b', '--benchmark', required=True, help='Benchmark dataset name (CAFA3 or PDBch)')
-    parser.add_argument('-d', '--dataset', required=True, help='Dataset type (train or test)')
+    parser.add_argument('-d', '--filename', required=True, help='Dataset type (train_df.pkl or test_df.pkl)')
     parser.add_argument('-o', '--output_dir', required=True, help='Output directory for the crawled files')
     
     args = parser.parse_args()
 
     benchmark = args.benchmark
-    dataset = args.dataset
+    filename = args.filename
     output_dir = args.output_dir
 
     os.makedirs(output_dir, exist_ok=True)
 
-    data_file = f"data/{benchmark}/{dataset}_df.pkl"
+    data_file = f"data/{benchmark}/{filename}"
 
     df = pd.read_pickle(data_file)
     df.dropna(subset=['STRING'], inplace=True)

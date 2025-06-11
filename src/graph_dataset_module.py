@@ -2,7 +2,7 @@
 # $ @Author       : Weining Lin
 # $ @Date         : 2024-04-14 19:54
 # $ @LastEditTime : 2024-04-30 22:27
-# $ @Description  : 请填写简介
+# $ @Description  : Graph dataset module for GOBeacon
 #$/
 from torch_geometric.data import DataLoader
 import pytorch_lightning as pl
@@ -38,9 +38,6 @@ class GraphDataModule(pl.LightningDataModule):
                 self.train_dataset, batch_size=self.cfg.batch_size, shuffle=True, num_workers=20,
                 persistent_workers=True, pin_memory=True, follow_batch=['x', 'positive_x', 'negative_x', 'para_x'],
                 )
-        # return DataLoader(
-        #         self.train_dataset, batch_size=self.cfg.batch_size, shuffle=True, follow_batch=['x', 'positive_x', 'negative_x', 'para_x'],
-        #         )
 
 
     def val_dataloader(self):
@@ -48,22 +45,15 @@ class GraphDataModule(pl.LightningDataModule):
                 self.valid_dataset, batch_size=self.cfg.batch_size, shuffle=False, num_workers=20,
                 persistent_workers=True, pin_memory=True, follow_batch=['x', 'positive_x', 'negative_x', 'para_x'],
                 )
-        # return DataLoader(
-        #         self.valid_dataset, batch_size=self.cfg.batch_size, shuffle=False, follow_batch=['x', 'positive_x', 'negative_x', 'para_x'],
-        #         )
 
     def test_dataloader(self):
         return DataLoader(
                 self.test_dataset, batch_size=self.cfg.batch_size, shuffle=False, num_workers=20,
                 persistent_workers=True, pin_memory=True, follow_batch=['x', 'positive_x', 'negative_x', 'para_x'])
-        # return DataLoader(
-        #         self.test_dataset, batch_size=self.cfg.batch_size, shuffle=False,)
 
     def predict_dataloader(self):
         return DataLoader(
                 self.test_dataset, batch_size=self.cfg.batch_size, shuffle=False, num_workers=20,
                 persistent_workers=True, pin_memory=True, follow_batch=['x', 'positive_x', 'negative_x', 'para_x'],
                 )
-        # return DataLoader(
-        #         self.test_dataset, batch_size=self.cfg.batch_size, shuffle=False,
-        #         )
+

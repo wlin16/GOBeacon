@@ -3,19 +3,21 @@
 # Set the ontology type, benchmark dataset, LMDB directory, model choice, and training type
 ONTOLOGY=CC # BP, CC, or MF
 BENCHMARK=CAFA3 # CAFA3 or PDBch
-MODEL_CHOICE=mlp # mlp or graph
 TRAIN_TYPE=structure # sequence, structure or graph
 LMDB_DIR=data/lmdb/${BENCHMARK}_${TRAIN_TYPE}
 MODEL_SAVE_PATH=./result/${BENCHMARK}/model
 MODEL_FILENAME=${ONTOLOGY}_${TRAIN_TYPE}
 
-# Determine the input dimension of the model based on the training type
+# Determine the input dimension and the architecture of the model based on the training type
 if [ "$TRAIN_TYPE" = "sequence" ]; then
     MODEL_INPUT_DIM=1280
+    MODEL_CHOICE=mlp
 elif [ "$TRAIN_TYPE" = "structure" ]; then
     MODEL_INPUT_DIM=1024
+    MODEL_CHOICE=mlp
 elif [ "$TRAIN_TYPE" = "graph" ]; then
     MODEL_INPUT_DIM=1024
+    MODEL_CHOICE=graph
 fi
 
 # Navigate to the root directory of the project repository

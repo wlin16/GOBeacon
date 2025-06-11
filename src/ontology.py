@@ -27,9 +27,6 @@ class Ontology(object):
             parents = self.get_parents(go_id)
             if len(parents) == 0:
                 min_n = n
-            # else:
-            #     min_n = min([cnt[x] for x in parents])
-            
             else:
                 min_n_list = [cnt[x] for x in parents if x in cnt]
                 if min_n_list == []:

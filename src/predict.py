@@ -238,7 +238,7 @@ class Predictor:
             df.to_csv(save_prediction_path)
 
     def run_metrics(self):
-
+        
         self._load_obo()
         self._load_annotation()
 

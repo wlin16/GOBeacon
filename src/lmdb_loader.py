@@ -25,8 +25,6 @@ class LMDBLoader:
         self.strict_get = strict_get
         self._exclude_key = _exclude_key
         env = self._connect_db(self.db_path)
-        # with env.begin() as txn:
-        # self._keys = [k for k in txn.cursor().iternext(values=False) if k.decode() not in _exclude_key]
 
         import atexit
         atexit.register(lambda s: s._close_db, self)
@@ -66,11 +64,6 @@ class LMDBLoader:
             self._connect_db(self.db_path, attach=True)
 
         idx_key = self.key_list[idx].encode("ascii")
-        # if idx_key not in self.key_list:
-        #    if self.strict_get:
-        #        raise ValueError(f'query index {idx_key.decode()} not in lmdb.')
-        #    else:
-        #        return None
 
         with self._env.begin() as txn:
             with txn.cursor() as curs:

@@ -8,14 +8,14 @@ ROOT_DIR=/path/to/your/project/dir # ! Need to specify!!!!!!! e.g. ~/GOBeacon
 cd $ROOT_DIR
 
 # Define the benchmark dataset (options: CAFA3 or PDBch). This parameter determines which dataset to process.
-BENCHMARK=PDBch
+BENCHMARK=CAFA3
 
 # Define the specific dataset file (options: train_df.pkl or test_df.pkl).
 DATASET=train_df.pkl
+# DATASET=test_df.pkl
 
 # Specify the directory where the PPI data is stored.
 PPI_PATH=/path/to/your/ppi_data # ! Need to specify!!!!!!! e.g. ~/GOBeacon/data/string_training_crawl
-
 # Define the type of data extraction to perform (options: graph, sequence, structure). This parameter dictates the format of the embeddings to be extracted.
 EXTRACT_TYPE=graph
 

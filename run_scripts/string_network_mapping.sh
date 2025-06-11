@@ -5,20 +5,21 @@
 # Usage:
 #   bash string_network_mapping.sh 
 
-ROOT_DIR=/mnt/hdd16/weinilin/project_repos/GOBeacon
+ROOT_DIR=/path/to/your/project/dir # ! Need to specify!!!!!!! e.g. ~/GOBeacon
 
 cd $ROOT_DIR
 
 # Example1:
 # Get PPI network from STRING for CAFA3 training set:
 BENCHMARK=CAFA3 # CAFA3 or PDBch
-DATASET=train # train or test
-PPI_OUTPUT_DIR=./string_training_crawl
-python3 mapping.py -b $BENCHMARK -d $DATASET -o $PPI_OUTPUT_DIR
+FILENAME=test # train_df.pkl or test_df.pkl
+# PPI_OUTPUT_DIR=./string_training_crawl
+PPI_OUTPUT_DIR=/path/to/your/ppi_data # ! Need to specify!!!!!!! e.g. ~/GOBeacon/data/string_training_crawl
+python3 mapping.py -b $BENCHMARK -d $FILENAME -o $PPI_OUTPUT_DIR
 
-# Example2:
-# Get PPI network from STRING for PDBch test set:
-BENCHMARK=PDBch # CAFA3 or PDBch
-DATASET=test # train or test
-PPI_OUTPUT_DIR=./string_training_crawl
-python3 mapping.py -b $BENCHMARK -d $DATASET -o $PPI_OUTPUT_DIR
+# # Example2:
+# # Get PPI network from STRING for PDBch test set:
+# BENCHMARK=PDBch # CAFA3 or PDBch
+# DATASET=test # train or test
+# PPI_OUTPUT_DIR=./string_training_crawl
+# python3 mapping.py -b $BENCHMARK -d $DATASET -o $PPI_OUTPUT_DIR

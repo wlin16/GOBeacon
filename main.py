@@ -41,17 +41,18 @@ class ModelTrainer(object):
         log_file_dir = os.path.dirname(self.cfg.general.save_path_log)
         os.makedirs(log_file_dir, exist_ok=True)
 
-        # 配置根日志器
+        # Configure root logger
         logging.basicConfig(
             level=logging.DEBUG,
             format='[%(asctime)s] [%(levelname)s] %(message)s',
             datefmt='%Y-%m-%d %A %H:%M:%S',
             filename=self.cfg.general.save_path_log,
-            filemode='w'
+            filemode='w',
+            force=True
         )
 
         console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.INFO)
+        console_handler.setLevel(logging.DEBUG)
         formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s')
         console_handler.setFormatter(formatter)
         logging.getLogger().addHandler(console_handler)
@@ -157,7 +158,7 @@ class ModelTrainer(object):
 
     def define_trainer(self):
         cfg = self.cfg
-         # ModelCheckpoint 回调配置
+         # ModelCheckpoint callback configuration
         checkpoint_callback = ModelCheckpoint(
             monitor='val_loss', # val_loss, none
             dirpath=cfg.model.model_save_path,
@@ -247,7 +248,11 @@ def main(cfg: HydraConfig) -> None:
         
     elif cfg.general.usage == 'predict':
         prediction_result_dir =  cfg.predict.ensemble_dir
+        
         all_files = [file for file in os.listdir(prediction_result_dir) if file.startswith(cfg.dataset.load_data.sub_ontology)]
+        print(f"\nFound {len(all_files)} files in {prediction_result_dir}")
+        print(f"Reading files: {all_files}\n")
+        
         ensemble_prediction = 0
         for file in all_files:
             pred = torch.load(os.path.join(cfg.predict.ensemble_dir, file))

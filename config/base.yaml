@@ -68,6 +68,11 @@ predict:
   model_ckpt: result/${dataset.load_data.benchmark}/${dataset.load_data.sub_ontology}_sequence.ckpt
   ensemble_dir: null
 
+stat_analysis:
+  path: ./ensemble_pt
+  sub_ontology: bp
+  result_save_path: ./ensemble_pt
+
 wandb:
   project: CAFA3_${dataset.load_data.sub_ontology}
   run_id: null

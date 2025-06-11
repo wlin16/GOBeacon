@@ -19,7 +19,6 @@ class HetData(Data):
         self.ssl1_mask, self.ssl2_mask, self.anchor_label = ssl1_mask, ssl2_mask, anchor_label
         self.y_true = y_true
         self.pid = pid
-        #self.label, self.contrast_mask = label, contrast_mask
 
     def __cat_dim__(self, key, value, *args, **kwargs):
         if key == 'y_true':
