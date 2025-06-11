@@ -6,7 +6,6 @@ import numpy as np
 import ast
 import lmdb
 import pickle
-# from src.ontology import Ontology
 
 
 def check_exists(path):
@@ -40,7 +39,6 @@ def read_df(cfg, pid_list=None, mode="train"):
 
     csv_file = mode_dict[mode]
     df_path = os.path.join(cfg.ds_path,  cfg.benchmark, csv_file)
-    # 确保文件存在
     check_exists(df_path)
     full_df_path = os.path.join(cfg.ds_path, cfg.benchmark, cfg.train_centre_node_csv)
     df = pd.read_pickle(full_df_path)[cfg.sub_ontology]
